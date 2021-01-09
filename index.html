@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>在线编辑器</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			width: 100vw;
+			height: 100vh;
+		}
+		#edit,
+		#display{
+			width: 50%;
+			height: 100%;
+			float: left;
+			box-sizing: border-box;
+			border: 1px solid red;
+		}
+		iframe{
+			border: none;
+			width: 100%;
+			height: 100%;
+		}
+		textarea{
+			width: 100%;
+			height: 100%;
+			border: none;
+			resize: none;
+			white-space:pre;
+			outline: none;
+		}
+		#run{
+			width: 100px;
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			background-color: black;
+			color: white;
+			font-size: 16px;
+			font-weight: 600;
+		}
+	</style>
+</head>
+<body>
+<!-- 运行 -->
+
+<section id="run">运行</section>
+	<!-- 输入框 -->
+	<section id="edit">
+		<textarea id="edit-text" autocomplete="on">
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+</html>
+		</textarea>
+	</section>
+
+<!-- 显示框 -->
+	<section id="display">
+		<iframe src="./display.html" id="iframe">
+			
+		</iframe>
+	</section>
+
+
+<script type="text/javascript">
+
+	let run = document.getElementById('run'),
+		display = document.getElementById('display'),
+		edit = document.getElementById('edit-text'),
+		iframe = document.getElementById('iframe'),
+		regexp1 = /<head>[\w]+<\/head>/gm;
+
+
+	run.addEventListener('click', function (){
+		let content = edit.value.replace(/&lt;/mg,'<').replace(/&gt;/mg, '>');
+		let head = content.match(/<head>[\s\S]*<\/head>/img);
+		let body = content.match(/<body>[\s\S]*<\/body>/img);
+		iframe.contentDocument.body.innerHTML = body[0];
+		iframe.contentDocument.head.innerHTML = head[0];
+	});
+	
+
+</script>
+</body>
+</html>
